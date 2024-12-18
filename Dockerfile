@@ -29,7 +29,7 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry install --no-dev
 
 # Copiar código-fonte do projeto
-COPY . .
+COPY . ./
 
 # Expor a porta padrão do Django
 EXPOSE 8000
