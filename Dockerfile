@@ -2,7 +2,8 @@
 FROM python:3.12-slim AS python-base
 
 # Variáveis de ambiente
-ENV PYTHONUNBUFFERED=1 \
+ENV GIT_PYTHON_REFRESH=quiet\
+    PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
@@ -14,12 +15,13 @@ ENV PYTHONUNBUFFERED=1 \
 
 # Instalar dependências e o Poetry
 RUN apt-get update && apt-get install --no-install-recommends -y \
-        curl build-essential libpq-dev gcc libc-dev \
+        curl build-essential libpq-dev gcc libc-dev git \
     && curl -sSL https://install.python-poetry.org | python3 - \
     && poetry --version \
     && apt-get purge --auto-remove -y build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Copiar arquivos de configuração do Poetry
 WORKDIR /app
