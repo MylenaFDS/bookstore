@@ -1,3 +1,8 @@
 __pypackages__/
 venv/ 
 requirements.txt
+# Ignorar cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
