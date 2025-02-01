@@ -6,7 +6,7 @@ import git
 @csrf_exempt
 def update(request):
     if request.method == "POST":
-        repo = git.Repo(r'C:\bookstore')  # Corrigido para raw string
+        repo = git.Repo('D:\\bookstore\bookstore')
         origin = repo.remotes.origin
         origin.pull()
         return HttpResponse("Updated code in the local repository")
