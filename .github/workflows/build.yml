@@ -1,4 +1,4 @@
-name: Python Application
+ame: Python Application
 
 on: [push]
 
@@ -31,3 +31,4 @@ jobs:
 
       - name: Rodar testes com Django
         run: poetry run python manage.py test
+        
