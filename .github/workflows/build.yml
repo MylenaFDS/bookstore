@@ -31,3 +31,4 @@ jobs:
 
       - name: Rodar testes com Django
         run: poetry run python manage.py test
+        
