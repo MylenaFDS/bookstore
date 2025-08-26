@@ -15,6 +15,7 @@ django-debug-toolbar = "^4.4.6"
 gitpython = "^3.1.44"
 whitenoise = "^6.8.2"
 gunicorn = "^23.0.0"
+dj-database-url = "^3.0.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.0.0"
