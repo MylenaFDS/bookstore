@@ -1,9 +1,8 @@
-# Usar uma imagem Python Slim para otimização de espaço
-FROM python:3.12-slim AS python-base
+# Etapa base
+FROM python:3.12-slim
 
 # Variáveis de ambiente
-ENV GIT_PYTHON_REFRESH=quiet\
-    PYTHONUNBUFFERED=1 \
+ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
@@ -13,29 +12,25 @@ ENV GIT_PYTHON_REFRESH=quiet\
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     PATH="/opt/poetry/bin:$PATH"
 
-# Instalar dependências e o Poetry
-RUN apt-get update && apt-get install --no-install-recommends -y \
-        curl build-essential libpq-dev gcc libc-dev git \
+# Instalar dependências
+RUN apt-get update && apt-get install -y curl build-essential libpq-dev gcc git \
     && curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry --version \
-    && apt-get purge --auto-remove -y build-essential \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && poetry --version
 
-
-# Copiar arquivos de configuração do Poetry
+# Criar diretório e copiar dependências
 WORKDIR /app
-COPY poetry.lock pyproject.toml ./
+COPY pyproject.toml poetry.lock ./
 
-# Instalar dependências do Poetry (runtime)
+# Instalar dependências de runtime
 RUN poetry install --no-dev
 
-# Copiar código-fonte do projeto
-COPY . ./
+# Copiar o projeto
+COPY . .
 
-# Expor a porta padrão do Django
+# Expor porta do Django
 EXPOSE 8000
 
-# Comando padrão para rodar o servidor
+# Comando de inicialização
 CMD ["poetry", "run", "gunicorn", "bookstore.wsgi:application", "--bind", "0.0.0.0:8000"]
+
 

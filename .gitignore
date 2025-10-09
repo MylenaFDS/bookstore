@@ -140,3 +140,6 @@ staticfiles/
 
 __pycache__/
 *.pyc
+
+env.dev
+.env.dev
