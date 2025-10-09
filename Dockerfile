@@ -37,4 +37,5 @@ COPY . ./
 EXPOSE 8000
 
 # Comando padrão para rodar o servidor
-CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["poetry", "run", "gunicorn", "bookstore.wsgi:application", "--bind", "0.0.0.0:8000"]
+
