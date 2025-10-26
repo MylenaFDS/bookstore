@@ -26,8 +26,11 @@ SECRET_KEY = "m-&$)@+cm&_f)4apa^*jr4w-_q27zqqzn*sbth"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'exercicio-bookstore-34364d9e3c8c.herokuapp.com']
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'bookstore-arm4.onrender.com',
+]
 
 # Application definition
 
