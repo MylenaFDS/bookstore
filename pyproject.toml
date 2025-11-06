@@ -17,6 +17,8 @@ whitenoise = "^6.8.2"
 gunicorn = "^23.0.0"
 dj-database-url = "^3.0.1"
 python-dotenv = {extras = ["cli"], version = "^1.1.1"}
+psycopg2-binary = "^2.9"
+
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.0.0"
