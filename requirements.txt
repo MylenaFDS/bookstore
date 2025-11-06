@@ -13,3 +13,4 @@ smmap==5.0.2 ; python_version >= "3.12" and python_version < "4.0"
 sqlparse==0.5.3 ; python_version >= "3.12" and python_version < "4.0"
 tzdata==2024.2 ; python_version >= "3.12" and python_version < "4.0" and sys_platform == "win32"
 whitenoise==6.8.2 ; python_version >= "3.12" and python_version < "4.0"
+psycopg2-binary
