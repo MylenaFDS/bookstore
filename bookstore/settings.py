@@ -22,11 +22,8 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 
 # Aceita qualquer subdomínio do Render
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    ".onrender.com",  # qualquer app hospedado no Render
-]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'bookstore-arm4.onrender.com']
+
 
 # -------------------------------------------------
 # APLICAÇÕES
