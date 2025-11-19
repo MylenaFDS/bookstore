@@ -1,15 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+from rest_framework.routers import DefaultRouter
+from product.viewsets import ProductViewSet, CategoryViewSet
 
-from django.urls import include, path
-from rest_framework import routers
+router = DefaultRouter()
+router.register(r'products', ProductViewSet, basename='products')
+router.register(r'categories', CategoryViewSet, basename='categories')
 
-from product import viewsets
-
-router = routers.SimpleRouter()
-router.register(r"product", viewsets.ProductViewSet, basename="product")
-router.register(r"category", viewsets.CategoryViewSet, basename="category")
-
-urlpatterns = [
-    path("", include(router.urls)),
-]
+urlpatterns = router.urls
