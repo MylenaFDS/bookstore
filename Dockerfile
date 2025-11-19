@@ -27,10 +27,12 @@ RUN poetry install --no-dev
 # Copiar o projeto
 COPY . .
 
+# Coletar arquivos estáticos
+RUN poetry run python manage.py collectstatic --noinput
+
 # Expor porta do Django
 EXPOSE 8000
 
 # Comando de inicialização
 CMD ["poetry", "run", "gunicorn", "bookstore.wsgi:application", "--bind", "0.0.0.0:8000"]
-
 
