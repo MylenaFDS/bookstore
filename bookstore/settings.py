@@ -22,7 +22,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 
 # Aceita qualquer subdomínio do Render
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://bookstore-1-psc4.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'bookstore-1-psc4.onrender.com']
 
 
 # -------------------------------------------------
