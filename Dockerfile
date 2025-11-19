@@ -32,9 +32,6 @@ COPY . .
 # Criar diretório de staticfiles
 RUN mkdir -p /app/staticfiles
 
-# Aplicar migrations
-RUN poetry run python manage.py migrate
-
 # Coletar arquivos estáticos
 RUN poetry run python manage.py collectstatic --noinput
 
@@ -43,4 +40,3 @@ EXPOSE 8000
 
 # Comando de inicialização
 CMD ["poetry", "run", "gunicorn", "bookstore.wsgi:application", "--bind", "0.0.0.0:8000"]
-
