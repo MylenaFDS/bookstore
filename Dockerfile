@@ -12,20 +12,28 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     PATH="/opt/poetry/bin:$PATH"
 
-# Instalar dependências
+# Instalar dependências do sistema
 RUN apt-get update && apt-get install -y curl build-essential libpq-dev gcc git \
     && curl -sSL https://install.python-poetry.org | python3 - \
     && poetry --version
 
-# Criar diretório e copiar dependências
+# Criar diretório de trabalho
 WORKDIR /app
+
+# Copiar dependências
 COPY pyproject.toml poetry.lock ./
 
-# Instalar dependências de runtime
+# Instalar dependências
 RUN poetry install --no-dev
 
 # Copiar o projeto
 COPY . .
+
+# Criar diretório de staticfiles
+RUN mkdir -p /app/staticfiles
+
+# Aplicar migrations
+RUN poetry run python manage.py migrate
 
 # Coletar arquivos estáticos
 RUN poetry run python manage.py collectstatic --noinput
