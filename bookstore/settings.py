@@ -7,15 +7,13 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Segurança
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = config("SECRET_KEY", default="django-insecure-temp")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
+
 # Hosts permitidos
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    config("ALLOWED_HOSTS")
-]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ".onrender.com").split(",")
+
 
 # Banco de Dados (usando apenas DATABASE_URL — recomendado para Render)
 DATABASES = {
