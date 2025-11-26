@@ -1,42 +1,37 @@
-# Etapa base
 FROM python:3.12-slim
 
-# Variáveis de ambiente
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.8.4 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    PATH="/opt/poetry/bin:$PATH"
+    POETRY_VERSION=1.8.4
 
 # Instalar dependências do sistema
-RUN apt-get update && apt-get install -y curl build-essential libpq-dev gcc git \
-    && curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry --version
+RUN apt-get update && apt-get install -y \
+    curl build-essential libpq-dev gcc git \
+    && curl -sSL https://install.python-poetry.org | python3 -
 
-# Criar diretório de trabalho
+# Adicionar Poetry no PATH
+ENV PATH="/root/.local/bin:$PATH"
+
 WORKDIR /app
 
-# Copiar dependências
+# Copiar arquivos do Poetry
 COPY pyproject.toml poetry.lock ./
 
-# Instalar dependências
-RUN poetry install --no-dev
+# Desativar virtualenv e instalar dependências no sistema
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-ansi
 
 # Copiar o projeto
 COPY . .
 
-# Criar diretório de staticfiles
+# Criar pasta de estáticos
 RUN mkdir -p /app/staticfiles
 
-# Coletar arquivos estáticos
-RUN poetry run python manage.py collectstatic --noinput
+# Coletar estáticos
+RUN python manage.py collectstatic --noinput
 
-# Expor porta do Django
 EXPOSE 8000
 
-# Comando de inicialização
-CMD ["poetry", "run", "gunicorn", "bookstore.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Render vai usar isso automaticamente
+CMD ["gunicorn", "bookstore.wsgi:application", "--bind", "0.0.0.0:8000"]
+

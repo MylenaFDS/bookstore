@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
-set -o errexit  # Faz o script parar quando um comando falhar
+set -o errexit
 
-echo "🔧 Instalando dependências com Poetry..."
-poetry install --no-dev
+pip install poetry
+poetry install
 
-echo "🗄️ Rodando migrations..."
-poetry run python manage.py migrate --noinput
+python manage.py collectstatic --noinput
+python manage.py migrate
 
-echo "📦 Coletando arquivos estáticos..."
-poetry run python manage.py collectstatic --noinput
-
-echo "✅ Build finalizado com sucesso."

@@ -1,31 +1,30 @@
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/usr/src/app
+      - .:/app
     ports:
-      - 8000:8000
+      - "8000:8000"
     env_file:
-      - ./env.dev
-    networks:
-      - backend
+      - .env.dev
     depends_on:
       - db
+    networks:
+      - backend
+
   db:
-    image: postgres:13.0-alpine
-    volumes:
-      - postgres_data:/var/lib/postgres/data/
+    image: postgres:13-alpine
     environment:
-      - POSTGRES_USER=dev
-      - POSTGRES_PASSWORD=dev
-      - POSTGRES_DB=bookstore_db
+      POSTGRES_DB: exercicio-bookstore-db
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - backend
 
 networks:
   backend:
-    driver: bridge
 
 volumes:
   postgres_data:
