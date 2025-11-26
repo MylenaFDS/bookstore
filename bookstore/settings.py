@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # seus apps aqui
-    'core',
+    'bookstore',
+    'order',
+    'product'
 ]
 
 # Middlewares
