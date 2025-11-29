@@ -3,28 +3,27 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 
-# Caminho base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Segurança
-SECRET_KEY = config("SECRET_KEY", default="django-insecure-temp")
-DEBUG = config("DEBUG", default=False, cast=bool)
+SECRET_KEY = config("SECRET_KEY", default="unsafe-secret")
+DEBUG = config("DEBUG", cast=bool, default=True)
 
-
-# Hosts permitidos
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ".onrender.com").split(",")
 
-
-# Banco de Dados (usando apenas DATABASE_URL — recomendado para Render)
+# --------------------------
+# DATABASE
+# --------------------------
 DATABASES = {
     'default': dj_database_url.config(
-        default=config("DATABASE_URL"),
+        default=config("DATABASE_URL", default="sqlite:///db.sqlite3"),
         conn_max_age=600,
         conn_health_checks=True,
     )
 }
 
-# Apps instalados
+# --------------------------
+# INSTALLED_APPS
+# --------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,13 +32,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # seus apps aqui
     'bookstore',
+    'product',
     'order',
-    'product'
 ]
 
-# Middlewares
+# --------------------------
+# MIDDLEWARE – IMPORTANTE!
+# --------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,12 +50,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'bookstore.urls'
-
+# --------------------------
+# TEMPLATES – IMPORTANTE!
+# --------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,35 +69,35 @@ TEMPLATES = [
     },
 ]
 
+# --------------------------
+# WSGI
+# --------------------------
 WSGI_APPLICATION = 'bookstore.wsgi.application'
 
-# Validação de senhas
+# --------------------------
+# PASSWORD VALIDATION
+# --------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internacionalização
+# --------------------------
+# INTERNATIONALIZATION
+# --------------------------
 LANGUAGE_CODE = 'pt-br'
-
 TIME_ZONE = 'America/Sao_Paulo'
-
 USE_I18N = True
 USE_TZ = True
 
-# Arquivos estáticos
-STATIC_URL = 'static/'
+# --------------------------
+# STATIC FILES
+# --------------------------
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Default primary key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
