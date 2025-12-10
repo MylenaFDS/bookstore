@@ -3,11 +3,14 @@
 import os
 import sys
 
-if __name__ == "__main__" and "runserver" in sys.argv:
-    if len(sys.argv) == 2:  # usuário NÃO passou host:port
-        sys.argv.append("127.0.0.1:9000")
 
 def main():
+    # Se o usuário digitar apenas:
+    # poetry run python manage.py runserver
+    # então adicionamos a porta automaticamente
+    if "runserver" in sys.argv and len(sys.argv) == 2:
+        sys.argv.append("127.0.0.1:9000")
+
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bookstore.settings")
     try:
@@ -23,3 +26,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -14,6 +14,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-secret-key")
 
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
+SHOW_BROWSABLE = os.getenv("SHOW_BROWSABLE_API", "false").lower() == "true"
+
 # Render exige que você adicione o domínio EXATO:
 ALLOWED_HOSTS = [
     "localhost",
@@ -47,11 +49,11 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
-        "rest_framework.renderers.JSONRenderer"
-    ] if not DEBUG else [
         "rest_framework.renderers.JSONRenderer",
-        "rest_framework.renderers.BrowsableAPIRenderer",
-    ]
+    ] + (
+        ["rest_framework.renderers.BrowsableAPIRenderer"]
+        if SHOW_BROWSABLE else []
+    )
 }
 
 
