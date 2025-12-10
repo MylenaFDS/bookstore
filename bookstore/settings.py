@@ -14,7 +14,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-secret-key")
 
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-SHOW_BROWSABLE = os.getenv("SHOW_BROWSABLE_API", "false").lower() == "true"
 
 # Render exige que você adicione o domínio EXATO:
 ALLOWED_HOSTS = [
