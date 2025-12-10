@@ -36,11 +36,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # Seus apps
+    # Apps do projeto
     "bookstore",
     "product",
     "order",
+
+    # Django REST Framework
+    "rest_framework",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer"
+    ] if not DEBUG else [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ]
+}
 
 
 MIDDLEWARE = [

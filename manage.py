@@ -3,6 +3,9 @@
 import os
 import sys
 
+if __name__ == "__main__" and "runserver" in sys.argv:
+    if len(sys.argv) == 2:  # usuário NÃO passou host:port
+        sys.argv.append("127.0.0.1:9000")
 
 def main():
     """Run administrative tasks."""
