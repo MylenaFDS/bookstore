@@ -135,8 +135,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Static Files
-staticfiles/
+
 
 __pycache__/
 *.pyc
+
+env.dev
+.env.dev
